@@ -1,7 +1,4 @@
 #include "main.h"
-
-
-/************* PRINT UNSIGNED NUMBER IN OCTAL  ****************/
 /**
  * print_octal - f3
  * @types: pa

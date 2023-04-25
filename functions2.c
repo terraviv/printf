@@ -1,6 +1,43 @@
 #include "main.h"
+/**
+ * print_non_printable - f3
+ * @types: pb
+ * @buffer: pb
+ * @flags:  pb
+ * @width: pb
+ * @precision: pb
+ * @size: pb
+ * Return: pb
+ */
+int print_non_printable(va_list types, char buffer[],
+	int flags, int width, int precision, int size)
+{
 
-/****************** PRINT POINTER ******************/
+int k1 = 0;
+int z1 = 0;
+	char *y100 = va_arg(types, char *);
+
+	UNUSED(flags);
+	UNUSED(width);
+	UNUSED(precision);
+	UNUSED(size);
+	if (y100 == NULL)
+		return (write(1, "(null)", 6));
+
+	while (y100[z1] != '\0')
+	{
+		if (is_printable(y100[z1]))
+			buffer[z1 + k1] = y100[z1];
+		else
+			k1 += append_hexa_code(y100[z1], buffer, z1 + k1);
+
+		z1++;
+	}
+
+	buffer[z1 + k1] = '\0';
+
+	return (write(1, buffer, z1 + k1));
+}
 /**
  * print_pointer - f4
  * @types: pa
@@ -43,89 +80,6 @@ int print_pointer(va_list types, char buffer[],
 	return (write_pointer(buffer, se1, m4,
 		width, flags, atg, v8, s1));
 }
-
-/************************* PRINT NON PRINTABLE *************************/
-/**
- * print_non_printable - f3
- * @types: pb
- * @buffer: pb
- * @flags:  pb
- * @width: pb
- * @precision: pb
- * @size: pb
- * Return: pb
- */
-int print_non_printable(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
-{
-
-int k1 = 0;
-int z1 = 0;
-	char *y100 = va_arg(types, char *);
-
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(precision);
-	UNUSED(size);
-	if (y100 == NULL)
-		return (write(1, "(null)", 6));
-
-	while (y100[z1] != '\0')
-	{
-		if (is_printable(y100[z1]))
-			buffer[z1 + k1] = y100[z1];
-		else
-			k1 += append_hexa_code(y100[z1], buffer, z1 + k1);
-
-		z1++;
-	}
-
-	buffer[z1 + k1] = '\0';
-
-	return (write(1, buffer, z1 + k1));
-}
-
-/************************* PRINT REVERSE *************************/
-/**
- * print_reverse - f1.
- * @types: pa
- * @buffer: pa
- * @flags:  pa
- * @width: pa
- * @precision: pa
- * @size: pa
- * Return: pa
- */
-int print_reverse(va_list types, char buffer[],
-	int flags, int width, int precision, int size)
-{
-	char *zk;
-	int kz = 0;
-int i;
-
-	UNUSED(buffer);
-	UNUSED(flags);
-	UNUSED(width);
-	UNUSED(size);
-	zk = va_arg(types, char *);
-	if (zk == NULL)
-	{
-		UNUSED(precision);
-		zk = ")Null(";
-	}
-	for (i = 0; zk[i]; i++)
-		;
-i = i - 1;
-	while (i >= 0)
-	{
-		char z = zk[i];
-
-		write(1, &z, 1);
-		kz++;
-i--; }
-	return (kz);
-}
-/************************* PRINT A STRING IN ROT13 *************************/
 /**
  * print_rot13string - f5.
  * @types: pa
@@ -176,3 +130,43 @@ kz++;
 }
 return (kz);
 }
+/**
+ * print_reverse - f1.
+ * @types: pa
+ * @buffer: pa
+ * @flags:  pa
+ * @width: pa
+ * @precision: pa
+ * @size: pa
+ * Return: pa
+ */
+int print_reverse(va_list types, char buffer[],
+	int flags, int width, int precision, int size)
+{
+	char *zk;
+	int kz = 0;
+int i;
+
+	UNUSED(buffer);
+	UNUSED(flags);
+	UNUSED(width);
+	UNUSED(size);
+	zk = va_arg(types, char *);
+	if (zk == NULL)
+	{
+		UNUSED(precision);
+		zk = ")Null(";
+	}
+	for (i = 0; zk[i]; i++)
+		;
+i = i - 1;
+	while (i >= 0)
+	{
+		char z = zk[i];
+
+		write(1, &z, 1);
+		kz++;
+i--; }
+	return (kz);
+}
+

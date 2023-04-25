@@ -11,11 +11,13 @@
 #define F_ZERO 4
 #define F_PLUS 2
 #define F_MINUS 1
+#define UNUSED(x) (void)(x);
 int _printf(const char *format, ...);
 int handle_print(const char *fmt, int *i,
 va_list list, char buffer[], int flags, int width, int precision, int size);
 int is_digit(char);
 int is_printable(char);
+long int convert_size_number(long int num, int size);
 int append_hexa_code(char, char[], int);
 int print_hexa(va_list types, char map_to[],
 char buffer[], int flags, char flag_ch, int width, int precision, int size);
@@ -32,6 +34,8 @@ int print_int(va_list types, char buffer[],
 int print_string(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
 int print_char(va_list types, char buffer[],
+	int flags, int width, int precision, int size);
+int print_hexadecimal(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
 int print_percent(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
