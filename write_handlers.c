@@ -95,7 +95,7 @@ int write_num(int ind, char buffer[],
 	int flags, int width, int prec,
 	int length, char padd, char extra_c)
 {
-	int i, padd_start = 1;
+	int i, mcur = 1;
 
 	if (prec == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0' && width == 0)
 		return (0); /* printf(".0d", 0)  no char is printed */
@@ -127,9 +127,9 @@ int write_num(int ind, char buffer[],
 		else if (!(flags & F_MINUS) && padd == '0')/* extra char to left of padd */
 		{
 			if (extra_c)
-				buffer[--padd_start] = extra_c;
-			return (write(1, &buffer[padd_start], i - padd_start) +
-				write(1, &buffer[ind], length - (1 - padd_start)));
+				buffer[--mcur] = extra_c;
+			return (write(1, &buffer[mcur], i - mcur) +
+				write(1, &buffer[ind], length - (1 - mcur)));
 		}
 	}
 	if (extra_c)

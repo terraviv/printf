@@ -152,7 +152,7 @@ int print_rot13string(va_list types, char buffer[],
 	char x;
 	char *str;
 	unsigned int i, j;
-	int count = 0;
+	int mct = 0;
 	char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
@@ -173,7 +173,7 @@ int print_rot13string(va_list types, char buffer[],
 			{
 				x = out[j];
 				write(1, &x, 1);
-				count++;
+				mct++;
 				break;
 			}
 		}
@@ -181,8 +181,8 @@ int print_rot13string(va_list types, char buffer[],
 		{
 			x = str[i];
 			write(1, &x, 1);
-			count++;
+			mct++;
 		}
 	}
-	return (count);
+	return (mct);
 }
