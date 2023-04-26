@@ -1,25 +1,16 @@
 #include "main.h"
-void print_buffer(char my_array[], int *rel_var1);
+
+void print_buffer(char buffer[], int *buff_ind);
+
 /**
- * print_buffer - f1
- * @my_array: p1.
- * @rel_var1: p2.
- */
-void print_buffer(char my_array[], int *rel_var1)
-{
-	if (*rel_var1 > 0)
-		write(1, &my_array[0], *rel_var1);
-	*rel_var1 = 0;
-}
-/**
- * _printf - f1
- * @format: p1.
- * Return: something.
+ * _printf - Printf function
+ * @format: format.
+ * Return: Printed chars.
  */
 int _printf(const char *format, ...)
 {
-	int j, flags, manapted = 0, mypted = 0;
-	int with, vice, darb, bd = 0;
+	int i, printed = 0, printed_chars = 0;
+	int flags, width, precision, size, buff_ind = 0;
 	va_list list;
 	char buffer[BUFF_SIZE];
 
@@ -28,35 +19,48 @@ int _printf(const char *format, ...)
 
 	va_start(list, format);
 
-	for (j = 0; format && format[j] != '\0'; j++)
+	for (i = 0; format && format[i] != '\0'; i++)
 	{
-		if (format[j] != '%')
+		if (format[i] != '%')
 		{
-			buffer[bd++] = format[j];
-			if (bd == BUFF_SIZE)
-				print_buffer(buffer, &bd);
-			mypted++;
+			buffer[buff_ind++] = format[i];
+			if (buff_ind == BUFF_SIZE)
+				print_buffer(buffer, &buff_ind);
+			/* write(1, &format[i], 1);*/
+			printed_chars++;
 		}
 		else
 		{
-			print_buffer(buffer, &bd);
-			flags = get_flags(format, &j);
-			with = get_width(format, &j, list);
-			vice = get_precision(format, &j, list);
-			darb = get_size(format, &j);
-			++j;
-			manapted = handle_print(format, &j, list, buffer,
-				flags, with, vice, darb);
-			if (manapted == -1)
+			print_buffer(buffer, &buff_ind);
+			flags = get_flags(format, &i);
+			width = get_width(format, &i, list);
+			precision = get_precision(format, &i, list);
+			size = get_size(format, &i);
+			++i;
+			printed = handle_print(format, &i, list, buffer,
+				flags, width, precision, size);
+			if (printed == -1)
 				return (-1);
-			mypted += manapted;
+			printed_chars += printed;
 		}
 	}
 
-	print_buffer(buffer, &bd);
+	print_buffer(buffer, &buff_ind);
 
 	va_end(list);
 
-	return (mypted);
+	return (printed_chars);
 }
 
+/**
+ * print_buffer - Prints the contents of the buffer if it exist
+ * @buffer: Array of chars
+ * @buff_ind: Index at which to add next char, represents the length.
+ */
+void print_buffer(char buffer[], int *buff_ind)
+{
+	if (*buff_ind > 0)
+		write(1, &buffer[0], *buff_ind);
+
+	*buff_ind = 0;
+}
